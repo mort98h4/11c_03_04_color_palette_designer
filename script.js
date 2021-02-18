@@ -25,7 +25,7 @@ function getColor() {
     const hsl = rgbToHSL(rgb);
     console.log(hsl);
 
-    calcComplementary(hsl);
+    calcCompound(hsl);
 }
 
 function hexToRGB(hex) {
@@ -103,7 +103,7 @@ function calcAnalogous(hsl) {
     if (hslArr[0].h < 0) {
         hslArr[0].h = hslArr[0].h + 359;
     }
-    if (hslArr[1].h < 359) {
+    if (hslArr[1].h < 0) {
         hslArr[1].h = hslArr[1].h + 359;
     }
     if (hslArr[3].h > 359) {
@@ -224,12 +224,42 @@ function calcComplementary(hsl) {
     if (hslArr[4].l < 0) {
         hslArr[4].l = 0;
     }
-    console.log(hslArr);
+    //console.log(hslArr);
     displayColorInfo(hslArr);
 }
 
-function calcCompound() {
+function calcCompound(hsl) {
     console.log("calcCompound");
+    console.log(hsl);
+
+    for (let index = 0; index <= 4; index++) {
+        const color = Object.create(Color);
+        color.h = hsl.h;
+        color.s = hsl.s;
+        color.l = hsl.l;
+        hslArr.push(color);
+    } 
+
+    hslArr[0].h = hsl.h-180;
+    hslArr[1].h = hsl.h-160;
+    hslArr[3].h = hsl.h+60;
+    hslArr[4].h = hsl.h+80;
+
+    if (hslArr[0].h < 0) {
+        hslArr[0].h = hslArr[0].h + 359;
+    }
+    if (hslArr[1].h < 0) {
+        hslArr[1].h = hslArr[1].h + 359;
+    }
+    if (hslArr[3].h > 359) {
+        hslArr[3].h = hslArr[3].h - 359;
+    }
+    if (hslArr[4].h > 359) {
+        hslArr[4].h = hslArr[4].h - 359;
+    }
+
+    console.log(hslArr);
+    displayColorInfo(hslArr);
 }
 
 function calcShades() {
