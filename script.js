@@ -25,7 +25,7 @@ function getColor() {
     const hsl = rgbToHSL(rgb);
     console.log(hsl);
 
-    calcCompound(hsl);
+    calcShades(hsl);
 }
 
 function hexToRGB(hex) {
@@ -258,12 +258,42 @@ function calcCompound(hsl) {
         hslArr[4].h = hslArr[4].h - 359;
     }
 
-    console.log(hslArr);
+    //console.log(hslArr);
     displayColorInfo(hslArr);
 }
 
-function calcShades() {
+function calcShades(hsl) {
     console.log("calcShades");
+    console.log(hsl);
+
+    for (let index = 0; index <= 4; index++) {
+        const color = Object.create(Color);
+        color.h = hsl.h;
+        color.s = hsl.s;
+        color.l = hsl.l;
+        hslArr.push(color);
+    } 
+
+    hslArr[0].l = hsl.l-30;
+    hslArr[1].l = hsl.l-15;
+    hslArr[3].l = hsl.l+15;
+    hslArr[4].l = hsl.l+30;
+
+    if (hslArr[0].l < 0) {
+        hslArr[0].l = 0;
+    }
+    if (hslArr[1].l < 0) {
+        hslArr[1].l = 0;
+    }
+    if (hslArr[3].l > 100) {
+        hslArr[3].l = 100;
+    }
+    if (hslArr[4].l > 100) {
+        hslArr[4].l = 100;
+    }
+
+    console.log(hslArr);
+    displayColorInfo(hslArr);
 }
 
 function displayColorInfo(hsl) {
