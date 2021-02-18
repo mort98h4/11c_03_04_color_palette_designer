@@ -24,7 +24,7 @@ function getColor() {
     const hsl = rgbToHSL(rgb);
     console.log(hsl);
 
-    calcAnalogous(hsl);
+    calcMonochromatic(hsl);
 }
 
 function hexToRGB(hex) {
@@ -98,26 +98,55 @@ function calcAnalogous(hsl) {
     hslArr[1].h = hsl.h-20;
     hslArr[3].h = hsl.h+20;
     hslArr[4].h = hsl.h+40;
-    // const h0 = {
-    //     h: hsl.h-40,
-    //     s: hsl.s,
-    //     l: hsl.l
-    // };
-    // const h1 = {
-    //     h: hsl.h-20,
-    //     s: hsl.s,
-    //     l: hsl.l
-    // };
-    // const h2 = hsl.h;
-    // const h3 = hsl.h+20;
-    // const h4 = hsl.h+40;
-    // hslArr.push(h0, h1, h2, h3, h4);
-    console.log(hslArr);
+    //console.log(hslArr);
+    if (hslArr[0].h < 0) {
+        hslArr[0].h = hslArr[0].h + 359;
+    }
+    if (hslArr[1].h < 359) {
+        hslArr[1].h = hslArr[1].h + 359;
+    }
+    if (hslArr[3].h > 359) {
+        hslArr[3].h = hslArr[3].h - 359;
+    }
+    if (hslArr[4].h > 359) {
+        hslArr[4].h = hslArr[4].h - 359;
+    }
+
     displayColorInfo(hslArr);
 }
 
-function calcMonochromatic() {
+function calcMonochromatic(hsl) {
     console.log("calcMonochromatic");
+    console.log(hsl);
+
+    for (let index = 0; index <= 4; index++) {
+        const color = Object.create(Color);
+        color.h = hsl.h;
+        color.s = hsl.s;
+        color.l = hsl.l;
+        hslArr.push(color);
+    } 
+
+    hslArr[0].s = hsl.s+15;
+    hslArr[1].s = hsl.s-15;
+    hslArr[3].l = hsl.l+15;
+    hslArr[4].l = hsl.l-15;
+
+    if (hslArr[0].s > 100) {
+        hslArr[0].s = 100;
+    } 
+    if (hslArr[1].s < 0) {
+        hslArr[1].s = 0;
+    }
+    if (hslArr[3].l > 100) {
+        hslArr[3].l = 100;
+    }
+    if (hslArr[4].s < 0) {
+        hslArr[4].s = 0;
+    }
+
+    //console.log(hslArr);
+    displayColorInfo(hslArr);
 }
 
 function calcTriad() {
@@ -141,13 +170,14 @@ function displayColorInfo(hsl) {
     console.log(hsl);
 
     for (let index = 0; index <= 4; index++) {
-        console.log(hslArr[index]);
+        //console.log(hslArr[index]);
         const rgb = hslToRGB(hslArr[index]);
-        console.log(rgb);
+        //console.log(rgb);
         const hex = rgbToHex(rgb);
-        console.log(hex);
+        //console.log(hex);
         const css = rgbToCSS(rgb);
-        console.log(css);
+        //console.log(css);
+
         showHex(hex, index);
         showRGB(rgb, index);
         showHSL(hslArr[index], index);
