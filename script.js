@@ -12,24 +12,17 @@ const Color = {
 function init() {
     console.log("init");
     document.querySelector("#colorpicker").addEventListener("input", getColor);
-    //getColor();
 }
 
 function getColor() {
-    console.log("getColor");
     const hex = document.querySelector("#colorpicker").value;
-    //const hex = "#bada55";
-    console.log(hex);
     const rgb = hexToRGB(hex);
-    //console.log(rgb);
     const hsl = rgbToHSL(rgb);
-    //console.log(hsl);
 
     calculateHarmony(hsl);
 }
 
 function hexToRGB(hex) {
-    console.log("hexToRGB");
     hex = hex.substring(1);
     const r = Number.parseInt(hex.substring(0, 2), 16);
     const g = Number.parseInt(hex.substring(2, 4), 16);
@@ -38,7 +31,6 @@ function hexToRGB(hex) {
 }
 
 function rgbToHSL(rgb) {
-    console.log("rgbToHSL");
     const r = rgb.r /= 255;
     const g = rgb.g /= 255;
     const b = rgb.b /= 255;
@@ -81,9 +73,6 @@ function rgbToHSL(rgb) {
 }
 
 function calculateHarmony(hsl) {
-    console.log("calculateHarmony");
-    console.log(hsl);
-
     for (let index = 0; index <= 4; index++) {
         const color = Object.create(Color);
         color.h = hsl.h;
@@ -121,19 +110,14 @@ function calculateHarmony(hsl) {
             calcShades(hsl);
         }
     }
-    //calcAnalogous(hsl);
     displayColorInfo(hslArr);
 }
 
 function calcAnalogous(hsl) {
-    console.log("calcAnalogous");
-    console.log(hsl);
-
     hslArr[0].h = hsl.h-40;
     hslArr[1].h = hsl.h-20;
     hslArr[3].h = hsl.h+20;
     hslArr[4].h = hsl.h+40;
-    //console.log(hslArr);
     if (hslArr[0].h < 0) {
         hslArr[0].h = hslArr[0].h + 359;
     }
@@ -151,17 +135,6 @@ function calcAnalogous(hsl) {
 }
 
 function calcMonochromatic(hsl) {
-    console.log("calcMonochromatic");
-    console.log(hsl);
-
-    // for (let index = 0; index <= 4; index++) {
-    //     const color = Object.create(Color);
-    //     color.h = hsl.h;
-    //     color.s = hsl.s;
-    //     color.l = hsl.l;
-    //     hslArr.push(color);
-    // } 
-
     hslArr[0].s = hsl.s+15;
     hslArr[1].s = hsl.s-15;
     hslArr[3].l = hsl.l+15;
@@ -180,23 +153,10 @@ function calcMonochromatic(hsl) {
         hslArr[4].s = 0;
     }
 
-    //console.log(hslArr);
-    //displayColorInfo(hslArr);
     return hslArr;
 }
 
 function calcTriad(hsl) {
-    console.log("calcTriad");
-    console.log(hsl);
-
-    // for (let index = 0; index <= 4; index++) {
-    //     const color = Object.create(Color);
-    //     color.h = hsl.h;
-    //     color.s = hsl.s;
-    //     color.l = hsl.l;
-    //     hslArr.push(color);
-    // } 
-
     hslArr[0].h = hsl.h-120;
     hslArr[1].h = hsl.h-120;
     hslArr[1].l = hsl.l+20;
@@ -222,23 +182,11 @@ function calcTriad(hsl) {
     if (hslArr[4].h > 359) {
         hslArr[4].h = hslArr[4].h - 359;
     }
-    //console.log(hslArr);
-    // displayColorInfo(hslArr);
+ 
     return hslArr;
 }
 
 function calcComplementary(hsl) {
-    console.log("calcComplementary");
-    console.log(hsl);
-
-    // for (let index = 0; index <= 4; index++) {
-    //     const color = Object.create(Color);
-    //     color.h = hsl.h;
-    //     color.s = hsl.s;
-    //     color.l = hsl.l;
-    //     hslArr.push(color);
-    // } 
-
     hslArr[0].h = hsl.h-180;
     hslArr[1].h = hsl.h-180;
     hslArr[1].l = hsl.l+20;
@@ -260,23 +208,11 @@ function calcComplementary(hsl) {
     if (hslArr[4].l < 0) {
         hslArr[4].l = 0;
     }
-    //console.log(hslArr);
-    // displayColorInfo(hslArr);
+
     return hslArr;
 }
 
 function calcCompound(hsl) {
-    console.log("calcCompound");
-    console.log(hsl);
-
-    // for (let index = 0; index <= 4; index++) {
-    //     const color = Object.create(Color);
-    //     color.h = hsl.h;
-    //     color.s = hsl.s;
-    //     color.l = hsl.l;
-    //     hslArr.push(color);
-    // } 
-
     hslArr[0].h = hsl.h-180;
     hslArr[1].h = hsl.h-160;
     hslArr[3].h = hsl.h+60;
@@ -295,23 +231,10 @@ function calcCompound(hsl) {
         hslArr[4].h = hslArr[4].h - 359;
     }
 
-    //console.log(hslArr);
-    // displayColorInfo(hslArr);
     return hslArr;
 }
 
 function calcShades(hsl) {
-    console.log("calcShades");
-    console.log(hsl);
-
-    // for (let index = 0; index <= 4; index++) {
-    //     const color = Object.create(Color);
-    //     color.h = hsl.h;
-    //     color.s = hsl.s;
-    //     color.l = hsl.l;
-    //     hslArr.push(color);
-    // } 
-
     hslArr[0].l = hsl.l-30;
     hslArr[1].l = hsl.l-15;
     hslArr[3].l = hsl.l+15;
@@ -330,23 +253,14 @@ function calcShades(hsl) {
         hslArr[4].l = 100;
     }
 
-    // console.log(hslArr);
-    // displayColorInfo(hslArr);
     return hslArr;
 }
 
 function displayColorInfo(hslArr) {
-    console.log("displayColorInfo");
-    console.log(hslArr);
-
     for (let index = 0; index <= 4; index++) {
-        //console.log(hslArr[index]);
         const rgb = hslToRGB(hslArr[index]);
-        //console.log(rgb);
         const hex = rgbToHex(rgb);
-        //console.log(hex);
         const css = rgbToCSS(rgb);
-        //console.log(css);
 
         showHex(hex, index);
         showRGB(rgb, index);
@@ -356,7 +270,6 @@ function displayColorInfo(hslArr) {
 }
 
 function hslToRGB(hsl, index) {
-    console.log(hsl);
     const h = hsl.h;
     const s = hsl.s / 100;
     const l = hsl.l / 100;
@@ -400,7 +313,6 @@ function hslToRGB(hsl, index) {
 }
 
 function rgbToHex(rgb) {
-    console.log("rgbToHex");
     const hexR = rgb.r.toString(16).padStart(2,"0");
     const hexG = rgb.g.toString(16).padStart(2,"0");
     const hexB = rgb.b.toString(16).padStart(2,"0");
@@ -409,23 +321,19 @@ function rgbToHex(rgb) {
 }
 
 function rgbToCSS(rgb) {
-    console.log("rgbToCSS");
     return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
 }
 
 function showHex(hex, index) {
-    console.log("showHex");
     hex = hex.toUpperCase();
     document.querySelector(`#colorinfo${index+1} .hex`).textContent = `HEX: ${hex}`;
 }
 
 function showRGB(rgb, index) {
-    console.log("showRGB");    
     document.querySelector(`#colorinfo${index+1} .rgb`).textContent = `R: ${rgb.r} G: ${rgb.g} B: ${rgb.b}`;
 }
 
 function showHSL(hsl, index) {
-    console.log("showHSL");
     const h = Math.round(hsl.h);
     const s = Math.round(hsl.s);
     const l = Math.round(hsl.l);
@@ -434,6 +342,5 @@ function showHSL(hsl, index) {
 }
 
 function changeBoxColor(css, index) {
-    console.log("changeBoxColor");
     document.querySelector(`#colorinfo${index+1} .colorbox`).style.backgroundColor = css;
 }
