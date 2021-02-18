@@ -1,4 +1,20 @@
 * {
     box-sizing: border-box;
+}
+
+main {
+    max-width: 1100px;
     margin: 0 auto;
+}
+
+#colors {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.colorbox {
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
 }
