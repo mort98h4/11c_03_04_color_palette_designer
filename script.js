@@ -2,6 +2,13 @@
 
 window.addEventListener("DOMContentLoaded", init);
 
+const hslArr = [];
+const Color = {
+    h: 0,
+    s: 0,
+    l: 0
+};
+
 function init() {
     console.log("init");
     getColor();
@@ -17,7 +24,7 @@ function getColor() {
     const hsl = rgbToHSL(rgb);
     console.log(hsl);
 
-    calc(hsl);
+    calcAnalogous(hsl);
 }
 
 function hexToRGB(hex) {
@@ -78,6 +85,35 @@ function calculateHarmony(hsl) {
 
 function calcAnalogous(hsl) {
     console.log("calcAnalogous");
+    console.log(hsl);
+
+    for (let index = 0; index <= 4; index++) {
+        const color = Object.create(Color);
+        color.h = hsl.h;
+        color.s = hsl.s;
+        color.l = hsl.l;
+        hslArr.push(color);
+    } 
+    hslArr[0].h = hsl.h-40;
+    hslArr[1].h = hsl.h-20;
+    hslArr[3].h = hsl.h+20;
+    hslArr[4].h = hsl.h+40;
+    // const h0 = {
+    //     h: hsl.h-40,
+    //     s: hsl.s,
+    //     l: hsl.l
+    // };
+    // const h1 = {
+    //     h: hsl.h-20,
+    //     s: hsl.s,
+    //     l: hsl.l
+    // };
+    // const h2 = hsl.h;
+    // const h3 = hsl.h+20;
+    // const h4 = hsl.h+40;
+    // hslArr.push(h0, h1, h2, h3, h4);
+    console.log(hslArr);
+    displayColorInfo(hslArr);
 }
 
 function calcMonochromatic() {
@@ -103,21 +139,24 @@ function calcShades() {
 function displayColorInfo(hsl) {
     console.log("displayColorInfo");
     console.log(hsl);
-    const rgb = hslToRGB(hsl);
-    console.log(rgb);
-    const hex = rgbToHex(rgb);
-    console.log(hex);
-    const css = rgbToCSS(rgb);
-    console.log(css);
 
-    showHex(hex, 3);
-    showRGB(rgb, 3);
-    showHSL(hsl, 3);
-    changeBoxColor(css, 3);
+    for (let index = 0; index <= 4; index++) {
+        console.log(hslArr[index]);
+        const rgb = hslToRGB(hslArr[index]);
+        console.log(rgb);
+        const hex = rgbToHex(rgb);
+        console.log(hex);
+        const css = rgbToCSS(rgb);
+        console.log(css);
+        showHex(hex, index);
+        showRGB(rgb, index);
+        showHSL(hslArr[index], index);
+        changeBoxColor(css, index);
+    }
 }
 
-function hslToRGB(hsl) {
-    console.log("hslToRGB");
+function hslToRGB(hsl, index) {
+    console.log(hsl);
     const h = hsl.h;
     const s = hsl.s / 100;
     const l = hsl.l / 100;
@@ -177,12 +216,12 @@ function rgbToCSS(rgb) {
 function showHex(hex, index) {
     console.log("showHex");
     hex = hex.toUpperCase();
-    document.querySelector(`#colorinfo${index} .hex .value`).textContent = `HEX: ${hex}`;
+    document.querySelector(`#colorinfo${index+1} .hex`).textContent = `HEX: ${hex}`;
 }
 
 function showRGB(rgb, index) {
     console.log("showRGB");    
-    document.querySelector(`#colorinfo${index} .rgb .value`).textContent = `R: ${rgb.r} G: ${rgb.g} B: ${rgb.b}`;
+    document.querySelector(`#colorinfo${index+1} .rgb`).textContent = `R: ${rgb.r} G: ${rgb.g} B: ${rgb.b}`;
 }
 
 function showHSL(hsl, index) {
@@ -191,10 +230,10 @@ function showHSL(hsl, index) {
     const s = Math.round(hsl.s);
     const l = Math.round(hsl.l);
 
-    document.querySelector(`#colorinfo${index} .hsl .value`).textContent = `H: ${h} S: ${s}% L: ${l}%`;
+    document.querySelector(`#colorinfo${index+1} .hsl`).textContent = `H: ${h} S: ${s}% L: ${l}%`;
 }
 
 function changeBoxColor(css, index) {
     console.log("changeBoxColor");
-    document.querySelector(`#colorinfo${index} .colorbox`).style.backgroundColor = css;
+    document.querySelector(`#colorinfo${index+1} .colorbox`).style.backgroundColor = css;
 }
