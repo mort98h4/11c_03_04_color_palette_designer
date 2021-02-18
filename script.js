@@ -11,11 +11,19 @@ const Color = {
 
 function init() {
     console.log("init");
-    document.querySelector("#colorpicker").addEventListener("input", getColor);
+    let inputValue = document.querySelector("#colorpicker").value;
+    inputValue = "#00FF00";
+    const hex = inputValue;
+    selectColor(hex);
 }
 
-function getColor() {
-    const hex = document.querySelector("#colorpicker").value;
+function getColor(event) {
+    const hex = event.target.value;
+    selectColor(hex);
+}
+
+function selectColor(hex) {
+    //const hex = document.querySelector("#colorpicker").value;
     const rgb = hexToRGB(hex);
     const hsl = rgbToHSL(rgb);
 
@@ -267,6 +275,7 @@ function displayColorInfo(hslArr) {
         showHSL(hslArr[index], index);
         changeBoxColor(css, index);
     }
+    newInput();
 }
 
 function hslToRGB(hsl, index) {
@@ -343,4 +352,8 @@ function showHSL(hsl, index) {
 
 function changeBoxColor(css, index) {
     document.querySelector(`#colorinfo${index+1} .colorbox`).style.backgroundColor = css;
+}
+
+function newInput() {
+    document.querySelector("#colorpicker").addEventListener("input", getColor);
 }
