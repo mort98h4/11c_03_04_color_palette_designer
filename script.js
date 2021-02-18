@@ -11,21 +11,21 @@ const Color = {
 
 function init() {
     console.log("init");
-    //document.querySelector("#colorpicker").addEventListener("input", getColor);
-    getColor();
+    document.querySelector("#colorpicker").addEventListener("input", getColor);
+    //getColor();
 }
 
 function getColor() {
     console.log("getColor");
-    //const hex = document.querySelector("#colorpicker").value;
-    const hex = "#bada55";
+    const hex = document.querySelector("#colorpicker").value;
+    //const hex = "#bada55";
     console.log(hex);
     const rgb = hexToRGB(hex);
-    console.log(rgb);
+    //console.log(rgb);
     const hsl = rgbToHSL(rgb);
-    console.log(hsl);
+    //console.log(hsl);
 
-    calcShades(hsl);
+    calculateHarmony(hsl);
 }
 
 function hexToRGB(hex) {
@@ -82,10 +82,6 @@ function rgbToHSL(rgb) {
 
 function calculateHarmony(hsl) {
     console.log("calculateHarmony");
-}
-
-function calcAnalogous(hsl) {
-    console.log("calcAnalogous");
     console.log(hsl);
 
     for (let index = 0; index <= 4; index++) {
@@ -95,6 +91,44 @@ function calcAnalogous(hsl) {
         color.l = hsl.l;
         hslArr.push(color);
     } 
+
+    if (hslArr.length > 5) {
+        hslArr.shift(0);
+        hslArr.shift(1);
+        hslArr.shift(2);
+        hslArr.shift(3);
+        hslArr.shift(4);
+    }
+
+    const radioButtons = document.getElementsByName("harmony");
+    for (let i = 0; i < radioButtons.length; i++) {
+        if (radioButtons[i].checked === true && radioButtons[i].value === "analogous") {
+            calcAnalogous(hsl);
+        }
+        if (radioButtons[i].checked === true && radioButtons[i].value === "monochromatic") {
+            calcMonochromatic(hsl);
+        }
+        if (radioButtons[i].checked === true && radioButtons[i].value === "triad") {
+            calcTriad(hsl);
+        }
+        if (radioButtons[i].checked === true && radioButtons[i].value === "complementary") {
+            calcComplementary(hsl);
+        }
+        if (radioButtons[i].checked === true && radioButtons[i].value === "compound") {
+            calcCompound(hsl);
+        }
+        if (radioButtons[i].checked === true && radioButtons[i].value === "shades") {
+            calcShades(hsl);
+        }
+    }
+    //calcAnalogous(hsl);
+    displayColorInfo(hslArr);
+}
+
+function calcAnalogous(hsl) {
+    console.log("calcAnalogous");
+    console.log(hsl);
+
     hslArr[0].h = hsl.h-40;
     hslArr[1].h = hsl.h-20;
     hslArr[3].h = hsl.h+20;
@@ -113,20 +147,20 @@ function calcAnalogous(hsl) {
         hslArr[4].h = hslArr[4].h - 359;
     }
 
-    displayColorInfo(hslArr);
+    return hslArr;
 }
 
 function calcMonochromatic(hsl) {
     console.log("calcMonochromatic");
     console.log(hsl);
 
-    for (let index = 0; index <= 4; index++) {
-        const color = Object.create(Color);
-        color.h = hsl.h;
-        color.s = hsl.s;
-        color.l = hsl.l;
-        hslArr.push(color);
-    } 
+    // for (let index = 0; index <= 4; index++) {
+    //     const color = Object.create(Color);
+    //     color.h = hsl.h;
+    //     color.s = hsl.s;
+    //     color.l = hsl.l;
+    //     hslArr.push(color);
+    // } 
 
     hslArr[0].s = hsl.s+15;
     hslArr[1].s = hsl.s-15;
@@ -147,20 +181,21 @@ function calcMonochromatic(hsl) {
     }
 
     //console.log(hslArr);
-    displayColorInfo(hslArr);
+    //displayColorInfo(hslArr);
+    return hslArr;
 }
 
 function calcTriad(hsl) {
     console.log("calcTriad");
     console.log(hsl);
 
-    for (let index = 0; index <= 4; index++) {
-        const color = Object.create(Color);
-        color.h = hsl.h;
-        color.s = hsl.s;
-        color.l = hsl.l;
-        hslArr.push(color);
-    } 
+    // for (let index = 0; index <= 4; index++) {
+    //     const color = Object.create(Color);
+    //     color.h = hsl.h;
+    //     color.s = hsl.s;
+    //     color.l = hsl.l;
+    //     hslArr.push(color);
+    // } 
 
     hslArr[0].h = hsl.h-120;
     hslArr[1].h = hsl.h-120;
@@ -188,20 +223,21 @@ function calcTriad(hsl) {
         hslArr[4].h = hslArr[4].h - 359;
     }
     //console.log(hslArr);
-    displayColorInfo(hslArr);
+    // displayColorInfo(hslArr);
+    return hslArr;
 }
 
 function calcComplementary(hsl) {
     console.log("calcComplementary");
     console.log(hsl);
 
-    for (let index = 0; index <= 4; index++) {
-        const color = Object.create(Color);
-        color.h = hsl.h;
-        color.s = hsl.s;
-        color.l = hsl.l;
-        hslArr.push(color);
-    } 
+    // for (let index = 0; index <= 4; index++) {
+    //     const color = Object.create(Color);
+    //     color.h = hsl.h;
+    //     color.s = hsl.s;
+    //     color.l = hsl.l;
+    //     hslArr.push(color);
+    // } 
 
     hslArr[0].h = hsl.h-180;
     hslArr[1].h = hsl.h-180;
@@ -225,20 +261,21 @@ function calcComplementary(hsl) {
         hslArr[4].l = 0;
     }
     //console.log(hslArr);
-    displayColorInfo(hslArr);
+    // displayColorInfo(hslArr);
+    return hslArr;
 }
 
 function calcCompound(hsl) {
     console.log("calcCompound");
     console.log(hsl);
 
-    for (let index = 0; index <= 4; index++) {
-        const color = Object.create(Color);
-        color.h = hsl.h;
-        color.s = hsl.s;
-        color.l = hsl.l;
-        hslArr.push(color);
-    } 
+    // for (let index = 0; index <= 4; index++) {
+    //     const color = Object.create(Color);
+    //     color.h = hsl.h;
+    //     color.s = hsl.s;
+    //     color.l = hsl.l;
+    //     hslArr.push(color);
+    // } 
 
     hslArr[0].h = hsl.h-180;
     hslArr[1].h = hsl.h-160;
@@ -259,20 +296,21 @@ function calcCompound(hsl) {
     }
 
     //console.log(hslArr);
-    displayColorInfo(hslArr);
+    // displayColorInfo(hslArr);
+    return hslArr;
 }
 
 function calcShades(hsl) {
     console.log("calcShades");
     console.log(hsl);
 
-    for (let index = 0; index <= 4; index++) {
-        const color = Object.create(Color);
-        color.h = hsl.h;
-        color.s = hsl.s;
-        color.l = hsl.l;
-        hslArr.push(color);
-    } 
+    // for (let index = 0; index <= 4; index++) {
+    //     const color = Object.create(Color);
+    //     color.h = hsl.h;
+    //     color.s = hsl.s;
+    //     color.l = hsl.l;
+    //     hslArr.push(color);
+    // } 
 
     hslArr[0].l = hsl.l-30;
     hslArr[1].l = hsl.l-15;
@@ -292,13 +330,14 @@ function calcShades(hsl) {
         hslArr[4].l = 100;
     }
 
-    console.log(hslArr);
-    displayColorInfo(hslArr);
+    // console.log(hslArr);
+    // displayColorInfo(hslArr);
+    return hslArr;
 }
 
-function displayColorInfo(hsl) {
+function displayColorInfo(hslArr) {
     console.log("displayColorInfo");
-    console.log(hsl);
+    console.log(hslArr);
 
     for (let index = 0; index <= 4; index++) {
         //console.log(hslArr[index]);
